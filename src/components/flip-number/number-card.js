@@ -7,6 +7,7 @@ import style from '../style';
 import TransformUtil from '../../utils';
 import FlipCard from './flip-card';
 import Card from './card';
+import LinearGradient from "react-native-linear-gradient";
 
 const { width } = Dimensions.get('window');
 
@@ -22,7 +23,6 @@ class NumberCard extends React.Component {
 
   componentDidMount() {
     const { size } = this.props;
-    this.animateTick();
     this.rotateFront.addListener(({ value }) => {
       this.transformRef(this.frontRef, value, size * 0.3);
     });
@@ -30,6 +30,9 @@ class NumberCard extends React.Component {
     this.rotateBack.addListener(({ value }) => {
       this.transformRef(this.backRef, value, -size * 0.3);
     });
+
+    this.rotateFront.setValue(180);
+    this.rotateBack.setValue(0);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -54,12 +57,12 @@ class NumberCard extends React.Component {
     Animated.parallel([
       Animated.timing(this.rotateFront, {
         toValue: 180,
-        duration: 800,
+        duration: 300,
         useNativeDriver: true,
       }),
       Animated.timing(this.rotateBack, {
         toValue: 0,
-        duration: 800,
+        duration: 300,
         useNativeDriver: true,
       }),
     ]).start();
@@ -82,10 +85,9 @@ class NumberCard extends React.Component {
       number, previousNumber, size, numberWrapperStyle, cardStyle, flipCardStyle, numberStyle,
     } = this.props;
     return (
-      <View style={[style.numberWrapper,
-        { width: size * 0.8, height: size * 1.2, borderRadius: size / 10 },
-        numberWrapperStyle]}
-      >
+      <LinearGradient colors={['#5DCCFF', '#0598DB']} style={[style.numberWrapper,
+        { width: size * 0.8, height: size * 1.2, borderRadius: 5 },
+        numberWrapperStyle]}>
         <Card
           type="upper"
           size={size}
@@ -116,7 +118,7 @@ class NumberCard extends React.Component {
           flipCardStyle={flipCardStyle}
           numberStyle={numberStyle}
         />
-      </View>
+      </LinearGradient>
     );
   }
 }
