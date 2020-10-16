@@ -5,22 +5,22 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
   numberWrapper: {
-    backgroundColor: '#333333',
+  //  backgroundColor: '#333333',
     margin: 3,
-    shadowColor: '#1f1f1f',
+  /*  shadowColor: '#1f1f1f',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowRadius: 2,
     shadowOpacity: 1,
-    elevation: 5,
+    elevation: 5,*/
   },
   card: {
     flex: 0.5,
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#1f1f1f',
+  //  borderColor: '#1f1f1f',
     overflow: 'hidden',
   },
   overflowContainer: {
@@ -28,15 +28,16 @@ export default StyleSheet.create({
   },
   number: {
     fontWeight: '700',
-    color: '#cccccc',
+    color: '#FFF',
+    textAlign: 'center',
   },
   flipCard: {
     position: 'absolute',
     left: 0,
     height: '50%',
     width: '100%',
-    backgroundColor: '#333333',
-    borderColor: '#1f1f1f',
+  //  backgroundColor: '#333333',
+   // borderColor: '#1f1f1f',
     backfaceVisibility: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
