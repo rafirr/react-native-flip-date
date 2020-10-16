@@ -11,41 +11,31 @@ import style from './style';
 
 class Timer extends React.Component {
   state = {
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    months: undefined,
+    monthsEnd: undefined,
+    days: undefined,
+    daysEnd: undefined,
   }
 
   componentDidMount() {
-    const { time, play } = this.props;
-    const { hours, minutes, seconds } = TransformUtils.formatNumberToTime(time);
-    this.setState({
-      hours,
-      minutes,
-      seconds,
-    }, () => {
-      if (play) {
-        this.timer = setInterval(
-          () => this.updateTime(),
-          1000,
-        );
-      }
-    });
-  }
+    const { date, play } = this.props;
+    const { months, days } = TransformUtils.dateDiff('2021-12-12');
+      this.setState({
+        months:months +1,
+        days: days + 1,
+        monthsEnd: months,
+        daysEnd: days
+      }, () => {
+        if (play) {
+          setTimeout(() => {
+          this.timer = setInterval(
+            () => this.updateTime(),
+            500,
+          );
+          }, 300);
+        }
+      });
 
-  shouldComponentUpdate(nextProps) {
-    const { play } = this.props;
-    if (nextProps.play !== play) {
-      if (nextProps.play) {
-        this.timer = setInterval(
-          () => this.updateTime(),
-          1000,
-        );
-      } else {
-        clearInterval(this.timer);
-      }
-    }
-    return true;
   }
 
   componentWillUnmount() {
@@ -53,21 +43,22 @@ class Timer extends React.Component {
   }
 
   updateTime = () => {
-    const { hours, minutes, seconds } = this.state;
-    const newState = TransformUtils.addTime(hours, minutes, seconds);
+    const { months, monthsEnd, days, daysEnd } = this.state;
+    const newState = TransformUtils.dateAnimate(months, monthsEnd, days, daysEnd);
     this.setState(prevState => ({ ...prevState, ...newState }));
+
+    if (newState.months === monthsEnd && newState.days === daysEnd) {
+      clearInterval(this.timer);
+    }
   }
 
   render() {
     const { wrapperStyle, flipNumberProps } = this.props;
-    const { hours, minutes, seconds } = this.state;
+    const { months, days } = this.state;
     return (
       <View style={[style.wrapper, wrapperStyle]}>
-        {!!hours && <FlipNumber number={hours} unit="hours" {...flipNumberProps} />}
-        <Separator />
-        {!!minutes && <FlipNumber number={minutes} unit="minutes" {...flipNumberProps} />}
-        <Separator />
-        {!!seconds && <FlipNumber number={seconds} unit="seconds" {...flipNumberProps} />}
+        {!!months && <FlipNumber number={months} unit="months" {...flipNumberProps} />}
+        {!!days && <FlipNumber number={days} unit="days" {...flipNumberProps} />}
       </View>
     );
   }
