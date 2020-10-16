@@ -51,19 +51,45 @@ function untranslateMatrix(matrix, origin) {
   multiplyInto(matrix, matrix, unTranslate);
 }
 
-function formatTime(hours, minutes, seconds) {
-  if (hours < 10) { hours = `0${hours}`; }
-  if (minutes < 10) { minutes = `0${minutes}`; }
-  if (seconds < 10) { seconds = `0${seconds}`; }
-  return { hours, minutes, seconds };
+function formatTime(months, days) {
+  if (months < 10) { months = `0${months}`; }
+  if (days < 10) { days = `0${days}`; }
+  return { months, days };
 }
 
-function formatNumberToTime(number) {
-  const secNum = parseInt(number);
-  const hours = Math.floor(secNum / 3600);
-  const minutes = Math.floor((secNum - (hours * 3600)) / 60);
-  const seconds = secNum - (hours * 3600) - (minutes * 60);
-  return formatTime(hours, minutes, seconds);
+function dateDiff(startingDate, endingDate) {
+  var startDate = new Date(new Date(startingDate).toISOString().substr(0, 10));
+  if (!endingDate) {
+    endingDate = new Date().toISOString().substr(0, 10);    // need date in YYYY-MM-DD format
+  }
+  var endDate = new Date(endingDate);
+  if (startDate > endDate) {
+    var swap = startDate;
+    startDate = endDate;
+    endDate = swap;
+  }
+  var startYear = startDate.getFullYear();
+  var february = (startYear % 4 === 0 && startYear % 100 !== 0) || startYear % 400 === 0 ? 29 : 28;
+  var daysInMonth = [31, february, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+  var yearDiff = endDate.getFullYear() - startYear;
+  var monthDiff = endDate.getMonth() - startDate.getMonth();
+  if (monthDiff < 0) {
+    yearDiff--;
+    monthDiff += 12;
+  }
+  var dayDiff = endDate.getDate() - startDate.getDate();
+  if (dayDiff < 0) {
+    if (monthDiff > 0) {
+      monthDiff--;
+    } else {
+      yearDiff--;
+      monthDiff = 11;
+    }
+    dayDiff += daysInMonth[startDate.getMonth()];
+  }
+
+  return formatTime((yearDiff * 12)+monthDiff, dayDiff);
 }
 
 function addTime(hours, minutes, seconds) {
@@ -86,6 +112,18 @@ function addTime(hours, minutes, seconds) {
   return formatTime(hours, minutes, seconds);
 }
 
+function dateAnimate(months, monthsAll, days, daysAll) {
+  if (months > monthsAll) {
+    months -= 1;
+  }
+
+  if (days > daysAll) {
+    days -= 1;
+  }
+
+  return formatTime(months, days);
+}
+
 
 export default {
   createIdentityMatrix,
@@ -94,6 +132,7 @@ export default {
   perspectiveMatrix,
   translateMatrix,
   untranslateMatrix,
-  formatNumberToTime,
+  dateDiff,
+  dateAnimate,
   addTime,
 };
