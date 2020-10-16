@@ -11,12 +11,8 @@ function FlipNumber({
   number, unit, size, perspective, numberWrapperStyle, cardStyle, flipCardStyle, numberStyle,
 }) {
   number = parseInt(number);
-  let previousNumber = number - 1;
-  if (unit !== 'hours') {
-    previousNumber = previousNumber === -1 ? 59 : previousNumber;
-  } else {
-    previousNumber = previousNumber === -1 ? 23 : previousNumber;
-  }
+  let previousNumber = number + 1;
+ console.log(15, number)
   number = number < 10 ? `0${number}` : number;
   previousNumber = previousNumber < 10 ? `0${previousNumber}` : previousNumber;
 
