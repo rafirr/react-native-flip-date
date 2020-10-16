@@ -3,6 +3,7 @@ import { Animated, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 import style from '../style';
+import LinearGradient from "react-native-linear-gradient";
 
 function FlipCard({
   setRef, type, size, number, flipCardStyle, numberStyle,
@@ -14,19 +15,21 @@ function FlipCard({
         type === 'front'
           ? {
             top: 0,
-            borderTopLeftRadius: size / 10,
-            borderTopRightRadius: size / 10,
-            borderBottomWidth: 0.5,
+            borderTopLeftRadius: 5,
+            borderTopRightRadius: 5,
+           // borderBottomWidth: 0.5,
           }
           : {
             top: '50%',
-            borderBottomLeftRadius: size / 10,
-            borderBottomRightRadius: size / 10,
-            borderTopWidth: 0.5,
+            borderBottomLeftRadius: 5,
+            borderBottomRightRadius: 5,
+           // borderTopWidth: 0.5,
           },
         flipCardStyle,
+        {overflow: 'hidden'}
       ]}
     >
+      <LinearGradient style={{width: '100%'}} colors={['#0598DB', '#5DCCFF']}>
       <View style={style.overflowContainer}>
         <Text style={[style.number, {
           transform: [type === 'front' ? { translateY: size * 0.3 } : { translateY: -size * 0.3 }],
@@ -37,6 +40,7 @@ function FlipCard({
           {number}
         </Text>
       </View>
+      </LinearGradient>
     </Animated.View>
   );
 }
