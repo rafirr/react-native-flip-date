@@ -85,8 +85,8 @@ class NumberCard extends React.Component {
       number, previousNumber, size, numberWrapperStyle, cardStyle, flipCardStyle, numberStyle,
     } = this.props;
     return (
-      <LinearGradient colors={['#5DCCFF', '#0598DB']} style={[style.numberWrapper,
-        { width: size * 0.8, height: size * 1.2, borderRadius: 5 },
+      <View style={[style.numberWrapper,
+        { width: size * 0.8, height: size * 1.2, borderRadius: 5, backgroundColor: '#5DCCFF' },
         numberWrapperStyle]}>
         <Card
           type="upper"
@@ -118,7 +118,7 @@ class NumberCard extends React.Component {
           flipCardStyle={flipCardStyle}
           numberStyle={numberStyle}
         />
-      </LinearGradient>
+      </View>
     );
   }
 }
