@@ -18,11 +18,13 @@ class Timer extends React.Component {
   }
 
   componentDidMount() {
-    const { date, play } = this.props;
-    const { months, days } = TransformUtils.dateDiff('2021-12-12');
+    const { date, play, lastDate } = this.props;
+    const { months, days } = TransformUtils.dateDiff(date);
+    const lastDateDiff = lastDate ? TransformUtils.dateDiff(date, lastDate) : undefined;
+
       this.setState({
-        months:months +1,
-        days: days + 1,
+        months: lastDateDiff ? lastDateDiff.months : parseInt(months) +1,
+        days: lastDateDiff ? lastDateDiff.days : parseInt(days) + 1,
         monthsEnd: months,
         daysEnd: days
       }, () => {
@@ -47,19 +49,26 @@ class Timer extends React.Component {
     const newState = TransformUtils.dateAnimate(months, monthsEnd, days, daysEnd);
     this.setState(prevState => ({ ...prevState, ...newState }));
 
-    if (newState.months === monthsEnd && newState.days === daysEnd) {
+    if (parseInt(newState.months) === parseInt(monthsEnd) && parseInt(newState.days) === parseInt(daysEnd)) {
       clearInterval(this.timer);
     }
   }
 
   render() {
-    const { wrapperStyle, flipNumberProps } = this.props;
+    const { wrapperStyle, flipNumberProps, mLabel, dLabel, size } = this.props;
     const { months, days } = this.state;
     return (
-      <View style={[style.wrapper, wrapperStyle]}>
-        {!!months && <FlipNumber number={months} unit="months" {...flipNumberProps} />}
-        {!!days && <FlipNumber number={days} unit="days" {...flipNumberProps} />}
-      </View>
+      <>
+        <View style={[style.wrapper, wrapperStyle]}>
+          {!!months && <FlipNumber number={months} unit="months" {...flipNumberProps} />}
+          {!!days && <FlipNumber number={days} unit="days" {...flipNumberProps} />}
+        </View>
+        <View style={[style.wrapper, wrapperStyle]}>
+          <View style={[style.wrapper, style.flip, { width: 74}]}>{mLabel}</View>
+          <View style={[style.wrapper, style.flip, { width: 74}]}>{dLabel}</View>
+
+        </View>
+      </>
     );
   }
 }
