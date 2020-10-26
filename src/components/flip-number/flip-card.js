@@ -26,10 +26,9 @@ function FlipCard({
            // borderTopWidth: 0.5,
           },
         flipCardStyle,
-        {overflow: 'hidden'}
+        {backgroundColor: '#5DCCFF'}
       ]}
     >
-      <LinearGradient style={{width: '100%'}} colors={['#0598DB', '#5DCCFF']}>
       <View style={style.overflowContainer}>
         <Text style={[style.number, {
           transform: [type === 'front' ? { translateY: size * 0.3 } : { translateY: -size * 0.3 }],
@@ -40,7 +39,7 @@ function FlipCard({
           {number}
         </Text>
       </View>
-      </LinearGradient>
+
     </Animated.View>
   );
 }
