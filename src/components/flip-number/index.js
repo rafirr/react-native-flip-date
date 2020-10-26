@@ -12,7 +12,6 @@ function FlipNumber({
 }) {
   number = parseInt(number);
   let previousNumber = number + 1;
- console.log(15, number)
   number = number < 10 ? `0${number}` : number;
   previousNumber = previousNumber < 10 ? `0${previousNumber}` : previousNumber;
 
@@ -20,7 +19,7 @@ function FlipNumber({
   const previousNumberSplit = previousNumber.toString().split('');
 
   return (
-    <View style={style.wrapper}>
+    <View style={[style.flip, style.wrapper]}>
       <NumberCard
         number={numberSplit[0]}
         previousNumber={previousNumberSplit[0]}
@@ -54,7 +53,7 @@ FlipNumber.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
-  unit: PropTypes.oneOf(['hours', 'minutes', 'seconds']),
+  unit: PropTypes.string,
   size: PropTypes.number,
   perspective: PropTypes.number,
   numberWrapperStyle: PropTypes.object,
