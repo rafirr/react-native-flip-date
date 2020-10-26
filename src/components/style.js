@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
+    justifyContent: 'center'
   },
   numberWrapper: {
   //  backgroundColor: '#333333',
@@ -27,9 +28,11 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
   number: {
-    fontWeight: '700',
     color: '#FFF',
     textAlign: 'center',
+  },
+  flip: {
+    marginHorizontal: 8
   },
   flipCard: {
     position: 'absolute',
