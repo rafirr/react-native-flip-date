@@ -25,8 +25,8 @@ function FlipCard({
             borderBottomRightRadius: 5,
            // borderTopWidth: 0.5,
           },
+        {backgroundColor: '#5DCCFF'},
         flipCardStyle,
-        {backgroundColor: '#5DCCFF'}
       ]}
     >
       <View style={style.overflowContainer}>
